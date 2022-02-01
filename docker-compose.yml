@@ -1,0 +1,24 @@
+version: "3"
+services:
+  api:
+    build: Flask
+    ports:
+      - "5000:5000"
+      - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    
+  database:
+    image: mysql:5.7.8
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./init.sql:/data/application/init.sql
+    environment:
+      MYSQL_DATABASE: weathersensors
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3307:3306"
+
+
